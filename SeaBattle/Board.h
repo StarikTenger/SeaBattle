@@ -2,14 +2,17 @@
 #include <vector>
 #include "Vec2.h"
 
+// The board cell
 struct Cell {
-	bool ship = false;
-	bool hit = false;
+	int ship = 0;                  // Ship number. 0 if no ship
+	bool hit = false;              // Is this cell hit
 	Cell(bool ship = 0, bool hit = 0) : ship(ship), hit(hit) {}
 };
 
+// Parameters of the game
 struct Rules {
-	Vec2 size = { 10, 10 };
+	Vec2 size = { 10, 10 };        // Board size
+	// Numbers of ships of each size, bypass 0
 	std::vector<size_t> ship_number = { 0, 4, 3, 2, 1 };
 	Rules(Vec2 size = { 10, 10 },
 		std::vector<size_t> ship_number = { 0, 4, 3, 2, 1 }) :
@@ -45,9 +48,12 @@ public:
 	void clear_hits();
 	// Render to console
 	void render();
+
+	friend void test_board();
 private:
 	std::vector<std::vector<Cell>> field;
-	std::vector<size_t> ship_number;
+	std::vector<size_t> ship_number;   // Numbers of ship responding to size
+	std::vector<size_t> ship_hp = {0}; // Hp of each ship on board
 	Rules rules;
 	bool in_borders(Vec2 pos);
 	Cell& get(Vec2 pos);

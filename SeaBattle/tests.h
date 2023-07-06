@@ -77,6 +77,18 @@ void test_board() {
 		assert(!board.place_ship({ 0, 2 }, { 0, 0 }));
 		assert(board.place_ship({ 2, 0 }, { 0, 0 }) == SHIP_INTERSECTION);
 	}
+	// Hits
+	{
+		Board board;
+		assert(!board.place_ship({ 1,1 }, { 1,2 }));
+		assert(!board.place_ship({ 3,3 }, { 5,3 }));
+		assert(!board.place_ship({ 6,5 }, { 6,8 }));
+		board.hit({ 1, 1 });
+		board.hit({ 5, 5 });
+		board.hit({ 5, 6 });
+		std::vector<size_t> ship_hp = {0, 1, 3, 4};
+		assert(board.ship_hp == ship_hp);
+	}
 }
 
 void run_tests() {

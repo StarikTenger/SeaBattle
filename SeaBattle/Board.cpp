@@ -64,18 +64,42 @@ int Board::place_ship(Vec2 beg, Vec2 end) {
 	}
 
 	// Place ship cells
+	size_t ship_id = ship_hp.size();
+	ship_hp.push_back(ship_size);
 	for (Vec2 pos = beg; pos != end + step; pos += step) {
-		get(pos).ship = 1;
+		get(pos).ship = ship_id;
 	}
 
 	ship_number[ship_size]++;
 	return 0;
 }
 
+int Board::hit(Vec2 pos) {
+	assert(in_borders(pos));
+	get(pos).hit = 1;
+	if (ship_hp[get(pos).ship]) {
+		ship_hp[get(pos).ship]--;
+	}
+	return 0;
+}
+
 void Board::render() {
 	for (int x = 0; x < rules.size.x; x++) {
 		for (int y = 0; y < rules.size.y; y++) {
-			cout << field[x][y].ship << " ";
+			switch ((bool)field[x][y].ship * 2 + field[x][y].hit) {
+			case 0:
+				cout << ". ";
+				break;
+			case 1:
+				cout << "_ ";
+				break;
+			case 2:
+				cout << "O ";
+				break;
+			case 3:
+				cout << "X ";
+				break;
+			}
 		}
 		cout << "\n";
 	}
@@ -84,7 +108,7 @@ void Board::render() {
 
 bool Board::in_borders(Vec2 pos) {
 	return pos.x >= 0 && pos.y >= 0 &&
-		pos.x < rules.size.x &&
+		pos.x < rules.size.x&&
 		pos.y < rules.size.y;
 }
 
