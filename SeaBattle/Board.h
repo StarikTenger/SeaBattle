@@ -1,43 +1,11 @@
 #pragma once
 #include <vector>
+#include "Vec2.h"
 
 struct Cell {
 	bool ship = false;
 	bool hit = false;
 	Cell(bool ship = 0, bool hit = 0) : ship(ship), hit(hit) {}
-};
-
-struct Vec2 {
-	int x = 0;
-	int y = 0;
-	Vec2(int x = 0, int y = 0) : x(x), y(y) {}
-	bool operator==(const Vec2& other) {
-		return x == other.x && y == other.y;
-	}
-	bool operator!=(const Vec2& other) {
-		return !(*this == other);
-	}
-	Vec2 operator+(const Vec2& other) {
-		return { x + other.x, y + other.y };
-	}
-	Vec2 operator+=(const Vec2& other) {
-		*this = *this + other;
-		return *this;
-	}
-	Vec2 operator-(const Vec2& other) {
-		return { x - other.x, y - other.y };
-	}
-	Vec2 operator-=(const Vec2& other) {
-		*this = *this - other;
-		return *this;
-	}
-	Vec2 operator*(int k) {
-		return { x * k, y * k };
-	}
-	Vec2 operator*=(int k) {
-		*this = *this * k;
-		return *this;
-	}
 };
 
 struct Rules {
