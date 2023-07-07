@@ -129,6 +129,14 @@ void test_board() {
 		assert(!board.place_ship({ 4,7 }, { 4,7 }));
 		assert(board.verify());
 		board.render();
+		// Gameover
+		assert(!board.gameover());
+		for (int x = 0; x < board.rules.size.x; x++) {
+			for (int y = 0; y < board.rules.size.y; y++) {
+				board.hit({x, y});
+			}
+		}
+		assert(board.gameover());
 	}
 }
 

@@ -114,6 +114,14 @@ void Board::clear_hits() {
 	}
 }
 
+bool Board::gameover() {
+	size_t hp_sum = 0;
+	for (const auto hp : ship_hp) {
+		hp_sum += hp;
+	}
+	return !hp_sum;
+}
+
 void Board::render() {
 	for (int x = 0; x < rules.size.x; x++) {
 		for (int y = 0; y < rules.size.y; y++) {

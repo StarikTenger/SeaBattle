@@ -46,6 +46,8 @@ public:
 	bool verify();
 	// Clear all hits
 	void clear_hits();
+	// Check if all ships are destroyed
+	bool gameover();
 	// Render to console
 	void render();
 
