@@ -106,6 +106,14 @@ bool Board::verify() {
 	return true;
 }
 
+void Board::clear_hits() {
+	for (int x = 0; x < rules.size.x; x++) {
+		for (int y = 0; y < rules.size.y; y++) {
+			get({ x, y }).hit = 0;
+		}
+	}
+}
+
 void Board::render() {
 	for (int x = 0; x < rules.size.x; x++) {
 		for (int y = 0; y < rules.size.y; y++) {
