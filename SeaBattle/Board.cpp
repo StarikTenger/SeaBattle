@@ -54,11 +54,19 @@ int Board::place_ship(Vec2 beg, Vec2 end) {
 		return return_code;
 	}
 
+	// Sort beg and end
+	if (beg.x > end.x || beg.y > end.y) {
+		swap(beg, end);
+		step *= -1;
+	}
+
 	// Check for ship itersections with other ships
-	for (Vec2 pos = beg; pos != end + step; pos += step) {
-		if (get(pos).ship) {
-			return_code |= SHIP_INTERSECTION;
-			break;
+	for (Vec2 pos = beg - Vec2(1, 1); pos != end + Vec2(1, 1); pos += Vec2(1, 0)) {
+		for (pos.y = beg.y - 1; pos.y != end.y + 1; pos += Vec2(0, 1)) {
+			if (in_borders(pos) && get(pos).ship) {
+				return_code |= SHIP_INTERSECTION;
+				break;
+			}
 		}
 	}
 

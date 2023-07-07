@@ -77,6 +77,16 @@ void test_board() {
 		assert(!board.place_ship({ 0, 2 }, { 0, 0 }));
 		assert(board.place_ship({ 2, 0 }, { 0, 0 }) == SHIP_INTERSECTION);
 	}
+	{
+		Board board;
+		assert(!board.place_ship({ 0, 2 }, { 0, 0 }));
+		assert(board.place_ship({ 1, 2 }, { 1, 0 }) == SHIP_INTERSECTION);
+	}
+	{
+		Board board;
+		assert(!board.place_ship({ 3, 3 }, { 3, 5 }));
+		assert(board.place_ship({ 4, 3 }, { 6, 3 }) == SHIP_INTERSECTION);
+	}
 	// Hits
 	{
 		Board board;
