@@ -83,11 +83,42 @@ void test_board() {
 		assert(!board.place_ship({ 1,1 }, { 1,2 }));
 		assert(!board.place_ship({ 3,3 }, { 5,3 }));
 		assert(!board.place_ship({ 6,5 }, { 6,8 }));
+		std::vector<size_t> ship_hp = { 0, 2, 3, 4 };
+		assert(board.ship_hp == ship_hp);
 		board.hit({ 1, 1 });
 		board.hit({ 5, 5 });
 		board.hit({ 5, 6 });
-		std::vector<size_t> ship_hp = {0, 1, 3, 4};
+		ship_hp = { 0, 1, 3, 4 };
 		assert(board.ship_hp == ship_hp);
+		board.hit({ 1, 2 });
+		board.hit({ 4, 3 });
+		ship_hp = { 0, 0, 2, 4 };
+		assert(board.ship_hp == ship_hp);
+	}
+	// Verify
+	{
+		Board board;
+		assert(!board.place_ship({ 2, 0 }, { 4,0 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 6, 0 }, { 9,0 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 4,2 }, { 5,2 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 7,2 }, { 9,2 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 5,4 }, { 6,4 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 8,4 }, { 9,4 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 0,5 }, { 0,5 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 2,5 }, { 2,5 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 7,6 }, { 7,6 }));
+		assert(!board.verify());
+		assert(!board.place_ship({ 4,7 }, { 4,7 }));
+		assert(board.verify());
+		board.render();
 	}
 }
 

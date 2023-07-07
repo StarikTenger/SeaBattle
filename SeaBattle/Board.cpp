@@ -33,6 +33,9 @@ int Board::place_ship(Vec2 beg, Vec2 end) {
 		if (step.y) {
 			step.y = step.y > 0 ? 1 : -1;
 		}
+		else {
+			step.y = 1;
+		}
 	}
 
 	if (ship_size >= rules.ship_number.size()) { // Ship is too big
@@ -81,6 +84,18 @@ int Board::hit(Vec2 pos) {
 		ship_hp[get(pos).ship]--;
 	}
 	return 0;
+}
+
+bool Board::verify() {
+	if (ship_number.size() != rules.ship_number.size()) {
+		return false;
+	}
+	for (int i = 0; i < ship_number.size(); i++) {
+		if (ship_number[i] != rules.ship_number[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 
 void Board::render() {
