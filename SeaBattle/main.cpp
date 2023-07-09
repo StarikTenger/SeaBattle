@@ -1,16 +1,19 @@
 #include <iostream>
 #include "tests.h"
+#include "Game.h"
+#include "TestAI.h"
 
 using namespace std;
 
 int main() {
 	run_tests();
-	Board board;
-	board.place_ship({1,1}, {1,2});
-	board.place_ship({3,3}, {5,3});
-	board.place_ship({6,5}, {6,8});
-	board.hit({1, 1});
-	board.hit({5, 5});
-	board.hit({5, 6});
-	board.render();
+	Game game;
+	TestAI* ai1 = new TestAI();
+	TestAI* ai2 = new TestAI();
+	assert(game.init(shared_ptr<AI>(ai1), shared_ptr<AI>(ai2)));
+	int res = 0;
+	for (int i = 0; i < 100 && !res; i++) {
+		res = game.step();
+	}
+	cout << res << " wins";
 }

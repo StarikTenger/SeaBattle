@@ -33,7 +33,6 @@ enum HitStatus {
 	KILL = 2
 };
 
-
 class Board {
 public:
 	Board(Rules rules = {});
@@ -50,6 +49,8 @@ public:
 	bool gameover();
 	// Render to console
 	void render();
+	// Get rules
+	Rules get_rules();
 
 	friend void test_board();
 private:

@@ -145,6 +145,10 @@ void Board::render() {
 	cout << "\n";
 }
 
+Rules Board::get_rules() {
+	return rules;
+}
+
 bool Board::in_borders(Vec2 pos) {
 	return pos.x >= 0 && pos.y >= 0 &&
 		pos.x < rules.size.x&&
