@@ -16,9 +16,9 @@ int Game::step() {
 	int gameover_second = player_second.board.gameover();
 
 	// Render
-	cout << " -- " << step_number << " -- \n";
-	player_first.board.render();
-	player_second.board.render();
+	//cout << " -- " << step_number << " -- \n";
+	//player_first.board.render();
+	//player_second.board.render();
 
 	step_number++;
 	return gameover_first * 2 + gameover_second;

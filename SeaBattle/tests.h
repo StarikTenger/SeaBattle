@@ -1,7 +1,12 @@
 #pragma once
 #include <cassert>
 #include <iostream>
+#include <memory>
 #include "Board.h"
+#include "Game.h"
+#include "TestAI.h"
+
+using namespace std;
 
 void test_vector() {
 	assert(Vec2(1, 2) + Vec2(2, 1) == Vec2(3, 3));
@@ -140,7 +145,94 @@ void test_board() {
 	}
 }
 
+void test_game() {
+	{
+		TestAI* ai1 = nullptr;
+		TestAI* ai2 = nullptr;
+		{
+			Board board;
+			board.place_ship({ 2, 0 }, { 4,0 });
+			board.place_ship({ 6, 0 }, { 9,0 });
+			board.place_ship({ 4,2 }, { 5,2 });
+			board.place_ship({ 7,2 }, { 9,2 });
+			board.place_ship({ 5,4 }, { 6,4 });
+			board.place_ship({ 8,4 }, { 9,4 });
+			board.place_ship({ 0,5 }, { 0,5 });
+			board.place_ship({ 2,5 }, { 2,5 });
+			board.place_ship({ 7,6 }, { 7,6 });
+			board.place_ship({ 4,7 }, { 4,7 });
+			ai1 = new TestAI(board);
+		}
+		{
+			Board board;
+			board.place_ship({ 2, 0 }, { 4,0 });
+			board.place_ship({ 6, 0 }, { 9,0 });
+			board.place_ship({ 4,2 }, { 5,2 });
+			board.place_ship({ 7,2 }, { 9,2 });
+			board.place_ship({ 5,4 }, { 6,4 });
+			board.place_ship({ 8,4 }, { 9,4 });
+			board.place_ship({ 0,5 }, { 0,5 });
+			board.place_ship({ 2,5 }, { 2,5 });
+			board.place_ship({ 7,6 }, { 7,6 });
+			board.place_ship({ 4,7 }, { 4,7 });
+			ai2 = new TestAI(board);
+		}
+		Game game;
+		assert(game.init(shared_ptr<AI>(ai1), shared_ptr<AI>(ai2)));
+		int res = 0;
+		for (int i = 0; i < 100 && !res; i++) {
+			res = game.step();
+		}
+		assert(res == 3);
+		delete ai1;
+		delete ai2;
+	}
+
+	{
+		TestAI* ai1 = nullptr;
+		TestAI* ai2 = nullptr;
+		{
+			Board board;
+			board.place_ship({ 2, 0 }, { 4,0 });
+			board.place_ship({ 6, 0 }, { 9,0 });
+			board.place_ship({ 4,2 }, { 5,2 });
+			board.place_ship({ 7,2 }, { 9,2 });
+			board.place_ship({ 5,4 }, { 6,4 });
+			board.place_ship({ 8,4 }, { 9,4 });
+			board.place_ship({ 0,5 }, { 0,5 });
+			board.place_ship({ 2,5 }, { 2,5 });
+			board.place_ship({ 7,6 }, { 7,6 });
+			board.place_ship({ 4,7 }, { 4,7 });
+			ai1 = new TestAI(board);
+		}
+		{
+			Board board;
+			board.place_ship({ 2, 0 }, { 4,0 });
+			board.place_ship({ 6, 0 }, { 9,0 });
+			board.place_ship({ 4,2 }, { 5,2 });
+			board.place_ship({ 7,2 }, { 9,2 });
+			board.place_ship({ 5,4 }, { 6,4 });
+			board.place_ship({ 8,4 }, { 9,4 });
+			board.place_ship({ 0,5 }, { 0,5 });
+			board.place_ship({ 2,5 }, { 2,5 });
+			board.place_ship({ 7,6 }, { 7,6 });
+			board.place_ship({ 4,6 }, { 4,6 });
+			ai2 = new TestAI(board);
+		}
+		Game game;
+		assert(game.init(shared_ptr<AI>(ai1), shared_ptr<AI>(ai2)));
+		int res = 0;
+		for (int i = 0; i < 100 && !res; i++) {
+			res = game.step();
+		}
+		assert(res == 1);
+		delete ai1;
+		delete ai2;
+	}
+}
+
 void run_tests() {
 	test_vector();
 	test_board();
+	test_game();
 }
