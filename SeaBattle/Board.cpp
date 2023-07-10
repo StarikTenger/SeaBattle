@@ -1,4 +1,5 @@
 #include <cassert>
+#include <sstream>
 #include <iostream>
 #include "Board.h"
 
@@ -122,27 +123,28 @@ bool Board::gameover() {
 	return !hp_sum;
 }
 
-void Board::render() {
+string Board::render() {
+	stringstream ss;
 	for (int x = 0; x < rules.size.x; x++) {
 		for (int y = 0; y < rules.size.y; y++) {
 			switch ((bool)field[x][y].ship * 2 + field[x][y].hit) {
 			case 0:
-				cout << ". ";
+				ss << ". ";
 				break;
 			case 1:
-				cout << "_ ";
+				ss << "_ ";
 				break;
 			case 2:
-				cout << "O ";
+				ss << "O ";
 				break;
 			case 3:
-				cout << "X ";
+				ss << "X ";
 				break;
 			}
 		}
-		cout << "\n";
+		ss << "\n";
 	}
-	cout << "\n";
+	return ss.str();
 }
 
 Rules Board::get_rules() {

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Vec2.h"
 
 // The board cell
@@ -47,8 +48,8 @@ public:
 	void clear_hits();
 	// Check if all ships are destroyed
 	bool gameover();
-	// Render to console
-	void render();
+	// Render to string
+	std::string render();
 	// Get rules
 	Rules get_rules();
 

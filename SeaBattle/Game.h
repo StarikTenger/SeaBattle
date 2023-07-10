@@ -14,12 +14,16 @@ class Game {
 public:
 	bool init(std::shared_ptr<AI> ai1, std::shared_ptr<AI> ai2);
 	int step();
+	void render();
 private:
-	size_t step_number = 0;
 	struct Player {
 		Board board;
 		std::shared_ptr<AI> ai;
 	};
+
+	size_t step_number = 0;
+	std::string rendered = "";
+
 	bool init_player(Player& p);
 	// Player p1 attacks player p2
 	void attack(Player& p1, Player& p2);

@@ -147,8 +147,8 @@ void test_board() {
 
 void test_game() {
 	{
-		TestAI* ai1 = nullptr;
-		TestAI* ai2 = nullptr;
+		shared_ptr<AI> ai1 = nullptr;
+		shared_ptr<AI> ai2 = nullptr;
 		{
 			Board board;
 			board.place_ship({ 2, 0 }, { 4,0 });
@@ -161,7 +161,7 @@ void test_game() {
 			board.place_ship({ 2,5 }, { 2,5 });
 			board.place_ship({ 7,6 }, { 7,6 });
 			board.place_ship({ 4,7 }, { 4,7 });
-			ai1 = new TestAI(board);
+			ai1 = shared_ptr<AI>(new TestAI(board));
 		}
 		{
 			Board board;
@@ -175,17 +175,15 @@ void test_game() {
 			board.place_ship({ 2,5 }, { 2,5 });
 			board.place_ship({ 7,6 }, { 7,6 });
 			board.place_ship({ 4,7 }, { 4,7 });
-			ai2 = new TestAI(board);
+			ai2 = shared_ptr<AI>(new TestAI(board));
 		}
 		Game game;
-		assert(game.init(shared_ptr<AI>(ai1), shared_ptr<AI>(ai2)));
+		assert(game.init(ai1, ai2));
 		int res = 0;
 		for (int i = 0; i < 100 && !res; i++) {
 			res = game.step();
 		}
 		assert(res == 3);
-		delete ai1;
-		delete ai2;
 	}
 
 	{
@@ -224,10 +222,9 @@ void test_game() {
 		int res = 0;
 		for (int i = 0; i < 100 && !res; i++) {
 			res = game.step();
+			game.render();
 		}
 		assert(res == 1);
-		delete ai1;
-		delete ai2;
 	}
 }
 
@@ -235,4 +232,5 @@ void run_tests() {
 	test_vector();
 	test_board();
 	test_game();
+	cout << "All test passed\n";
 }

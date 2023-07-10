@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -19,9 +20,18 @@ int Game::step() {
 	//cout << " -- " << step_number << " -- \n";
 	//player_first.board.render();
 	//player_second.board.render();
+	stringstream ss;
+	ss << " -- " << step_number << " -- \n";
+	ss << player_first.board.render() << "\n";
+	ss << player_second.board.render() << "\n\n";
+	rendered = ss.str();
 
 	step_number++;
 	return gameover_first * 2 + gameover_second;
+}
+
+void Game::render() {
+	cout << rendered;
 }
 
 bool Game::init_player(Player& p) {
