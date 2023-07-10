@@ -220,6 +220,7 @@ void test_game() {
 		Game game;
 		assert(game.init(shared_ptr<AI>(ai1), shared_ptr<AI>(ai2)));
 		int res = 0;
+		game.render();
 		for (int i = 0; i < 100 && !res; i++) {
 			res = game.step();
 			game.render();

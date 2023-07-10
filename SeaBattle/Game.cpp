@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <sstream>
+#include <iterator>
 
 using namespace std;
 
@@ -20,18 +21,35 @@ int Game::step() {
 	//cout << " -- " << step_number << " -- \n";
 	//player_first.board.render();
 	//player_second.board.render();
-	stringstream ss;
-	ss << " -- " << step_number << " -- \n";
-	ss << player_first.board.render() << "\n";
-	ss << player_second.board.render() << "\n\n";
-	rendered = ss.str();
+	
 
 	step_number++;
 	return gameover_first * 2 + gameover_second;
 }
 
 void Game::render() {
-	cout << rendered;
+	stringstream ss;
+	cout << "\n\n -- " << step_number << " -- \n\n";
+	ss << player_first.board.render();
+	string str1 = ss.str();
+	ss.clear();
+	ss << player_second.board.render();
+	string str2 =  ss.str();
+	auto until_newline = [](string::const_iterator& str) {
+		while (*str != '\n') {
+			cout << *str;
+			str++;
+		}
+		str++;
+	};
+	auto it1 = str1.begin();
+	auto it2 = str2.begin();
+	for (int i = 0; i < player_first.board.get_rules().size.x; i++) {
+		until_newline(it1);
+		cout << "   ";
+		until_newline(it2);
+		cout << "\n";
+	}
 }
 
 bool Game::init_player(Player& p) {
